@@ -4,8 +4,8 @@ function Gameboard() {
     let board = []
 
     for (let i = 0; i < rows; i++) {
-        board[i] = []
-        for (let i = 0; i < columns; i++) {
+        board[i] = [];
+        for (let j = 0; j < columns; j++) {
             board[i].push(Cell());
         }
     }
@@ -13,14 +13,17 @@ function Gameboard() {
     getBoard = () => board;
 
     placeToken = (row, column, player) => {
-        if (board[row][column].getValue != 0) return;
+        if (board[row][column].getValue() != 0) return;
 
         else board[row][column].addToken(player);
     }
 
-    printBoard
+    printBoard = () => {
+        const boardWithCellValues = board.map((row) => row.map((cell) => cell.getValue()));
+        console.log(boardWithCellValues);
+    }
 
-    return {getBoard, placeToken, printBoard}
+    return {getBoard, placeToken, printBoard};
 }
 
 function Cell() {
@@ -33,8 +36,5 @@ function Cell() {
 
     getValue = () => value;
 
-    return {
-        addToken,
-        getValue
-    }
+    return {addToken, getValue};
 }
