@@ -64,15 +64,13 @@ function GameControler(playerOneName = "Player One", playerTwoName = "Player Two
         else {
             activePlayer = players[0];
         }
+        console.log(`It's ${activePlayer.name}'s turn`);
     };
 
     getActivePlayer = () => activePlayer;
 
     printNewRound = () => {
         board.printBoard();
-
-        console.log(`It's ${activePlayer.name}'s turn`);
-        userTokenPlacement();
     };
     
     userTokenPlacement = () => {
@@ -103,7 +101,15 @@ function GameControler(playerOneName = "Player One", playerTwoName = "Player Two
                 return boardWithCellValues[i][0];
             }
         }
+        
+        //Check for diagonal
+        if (boardWithCellValues[0][0] === boardWithCellValues[1][1] && boardWithCellValues[1][1] === boardWithCellValues[2][2] && boardWithCellValues[0][0] !== 0) {
+            return boardWithCellValues[0][0];
+        }
 
+        if (boardWithCellValues[0][2] === boardWithCellValues[1][1] && boardWithCellValues[1][1] === boardWithCellValues[2][0] && boardWithCellValues[0][0] !== 0) {
+            return boardWithCellValues[0][2];
+        }
         return 0;
     };
 
@@ -111,14 +117,13 @@ function GameControler(playerOneName = "Player One", playerTwoName = "Player Two
         console.log(`Placing ${activePlayer.token} into (${row}, ${column})`);
         board.placeToken(row, column, activePlayer.token);
 
-        switchActivePlayer();
-        
-        const gameWon = checkWinConditions(board);
-        if (gameWon !== 0) {
+        printNewRound();
+        if (checkWinConditions(board) !== 0) {
             console.log(`Player ${checkWinConditions(board)} has won!`)
             return;
         }
-        printNewRound();
+        switchActivePlayer();
+        userTokenPlacement();
     };
 
     userTokenPlacement();
