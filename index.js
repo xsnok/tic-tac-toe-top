@@ -82,13 +82,22 @@ function GameControler(playerOneName = "Player One", playerTwoName = "Player Two
         playRound(userRow, userColumn);
     };
 
-    //TODO: Add win conditions
     //Function returns token of winner
     checkWinConditions = (board) => {
         const boardWithCellValues = board.getBoardWithCellValues();
-        let temp = 0;
-        let temp2 = 0;
-        
+        //Checks for 3 in a column
+        outerLoop: for (let i = 0; i < 3; i++) {
+
+            let temp = boardWithCellValues[0][i];
+            if (temp === 0) break;
+
+            for (let j = 1; j < 3; j++) {
+                if (boardWithCellValues[j][i] !== temp) break outerLoop;
+            }
+            return temp;
+        }
+
+        //Check for 3 in a row
         for (let i = 0; i < 3; i++) {
             if (allElementsSame(boardWithCellValues[i]) && boardWithCellValues[i][0] !== 0) {
                 return boardWithCellValues[i][0];
