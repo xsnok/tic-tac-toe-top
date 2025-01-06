@@ -1,0 +1,23 @@
+.card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.board {
+    display: grid;
+    height: 500px;
+    width: 500px;
+    border-radius: 8px;
+    border: 6px solid #003049;
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+}
+
+.board-box {
+    background-color: #669bbc;
+    border-style: solid;
+    border-width: 6px;
+    border-color: #003049;
+    font-size: 4rem;
+    color: white;
+}

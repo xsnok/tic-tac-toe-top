@@ -131,4 +131,11 @@ function GameControler(playerOneName = "Player One", playerTwoName = "Player Two
     return {getActivePlayer};
 }
 
-let game = new GameControler();
+
+function ScreenController() {
+    updateScreen = () => {
+        
+    };
+}
+
+//let game = new GameControler();
