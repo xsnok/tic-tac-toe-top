@@ -47,7 +47,7 @@ function Cell() {
 }
 
 
-function GameControler(playerOneName = "Player One", playerTwoName = "Player Two") {
+function GameController(playerOneName = "Player One", playerTwoName = "Player Two") {
     board = Gameboard();
 
     const players = [
@@ -133,9 +133,19 @@ function GameControler(playerOneName = "Player One", playerTwoName = "Player Two
 
 
 function ScreenController() {
+    gameController = GameController();
+
     updateScreen = () => {
-        
+        const boxes = document.querySelectorAll(".board-box");
+
+        boxes.forEach(box => {
+            box.textContent = "";
+        });
     };
+
+    return {updateScreen}
 }
 
-//let game = new GameControler();
+let screen = new ScreenController();
+
+//let game = new GameController();
