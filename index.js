@@ -1,3 +1,7 @@
+function allElementsSame(array) {
+    return array.every(value => value === array[0]);
+};
+
 function Gameboard() {
     let rows = 3
     let columns = 3
@@ -18,12 +22,15 @@ function Gameboard() {
         else board[row][column].addToken(player);
     };
 
-    printBoard = () => {
-        const boardWithCellValues = board.map((row) => row.map((cell) => cell.getValue()));
-        console.log(boardWithCellValues);
+    getBoardWithCellValues = () => {
+        return board.map((row) => row.map((cell) => cell.getValue()));
     };
 
-    return {getBoard, placeToken, printBoard};
+    printBoard = () => {
+        console.log(getBoardWithCellValues());
+    };
+
+    return {getBoard, placeToken, getBoardWithCellValues, printBoard};
 }
 
 function Cell() {
@@ -51,7 +58,7 @@ function GameControler(playerOneName = "Player One", playerTwoName = "Player Two
     let activePlayer = players[0]
     
     switchActivePlayer = () => {
-        if (activePlayer = players[0]) {
+        if (activePlayer === players[0]) {
             activePlayer = players[1];
         }
         else {
@@ -67,14 +74,6 @@ function GameControler(playerOneName = "Player One", playerTwoName = "Player Two
         console.log(`It's ${activePlayer.name}'s turn`);
         userTokenPlacement();
     };
-
-    playRound = (row, column) => {
-        console.log(`Placing ${activePlayer.token} into (${row}, ${column})`);
-        board.placeToken(row, column, activePlayer.token);
-
-        switchActivePlayer();
-        printNewRound();
-    };
     
     userTokenPlacement = () => {
         let userRow = prompt(`${activePlayer.name}, what row do you want to place your token?`);
@@ -84,6 +83,34 @@ function GameControler(playerOneName = "Player One", playerTwoName = "Player Two
     };
 
     //TODO: Add win conditions
+    //Function returns token of winner
+    checkWinConditions = (board) => {
+        const boardWithCellValues = board.getBoardWithCellValues();
+        let temp = 0;
+        let temp2 = 0;
+        
+        for (let i = 0; i < 3; i++) {
+            if (allElementsSame(boardWithCellValues[i]) && boardWithCellValues[i][0] !== 0) {
+                return boardWithCellValues[i][0];
+            }
+        }
+
+        return 0;
+    };
+
+    playRound = (row, column) => {
+        console.log(`Placing ${activePlayer.token} into (${row}, ${column})`);
+        board.placeToken(row, column, activePlayer.token);
+
+        switchActivePlayer();
+        
+        const gameWon = checkWinConditions(board);
+        if (gameWon !== 0) {
+            console.log(`Player ${checkWinConditions(board)} has won!`)
+            return;
+        }
+        printNewRound();
+    };
 
     userTokenPlacement();
 
