@@ -123,25 +123,15 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
             return;
         }
         switchActivePlayer();
-        userTokenPlacement();
     };
 
-    userTokenPlacement();
-
-    return {getActivePlayer};
+    return {getActivePlayer, playRound};
 }
 
 
 function ScreenController() {
     board = Gameboard();
-
-    const boxes = document.querySelectorAll(".board-box");
-
-    clearScreen = () => {
-        boxes.forEach(box => {
-            box.textContent = "";
-        });
-    };
+    game = GameController();
 
     updateBoard = () => {
         const boardWithCellValues = board.getBoardWithCellValues();
@@ -168,11 +158,32 @@ function ScreenController() {
         }
     };
 
-    updateBoard();
+    updateTurnHeadline = () => {
+        const headline = document.querySelector(".player-turn-headline");
+        const thePlayer = game.getActivePlayer();
+        headline.textContent = `It's Player ${thePlayer.token}'s turn`;
+    };
+
+    updateScreen = () => {
+        updateBoard();
+        updateTurnHeadline();
+    };
+
+    clickHandlerBoard = () => {
+        const boxes = document.querySelectorAll(".board-box");
+
+        boxes.forEach(box => {
+            box.addEventListener("click", () => {
+                playRound(box.parentElement.dataset.row, box.dataset.column)
+                updateScreen();
+            });
+        });
+    };
+
+    updateScreen();
+    clickHandlerBoard();
 
     return {}
 }
 
 let screen = new ScreenController();
-
-//let game = new GameController();
