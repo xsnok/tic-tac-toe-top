@@ -114,6 +114,15 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
     };
 
     playRound = (row, column) => {
+        while (true) {
+            const boardWithCellValues = board.getBoardWithCellValues();
+            if (boardWithCellValues[row][column] === 0) {
+                break;
+            }
+            else {
+                return;
+            }
+        }
         console.log(`Placing ${activePlayer.token} into (${row}, ${column})`);
         board.placeToken(row, column, activePlayer.token);
 
@@ -185,5 +194,8 @@ function ScreenController() {
 
     return {}
 }
+
+//TODO: Create win screen
+//TODO: Create play again button
 
 let screen = new ScreenController();
