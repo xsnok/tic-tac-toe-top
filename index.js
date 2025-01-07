@@ -133,17 +133,44 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
 
 
 function ScreenController() {
-    gameController = GameController();
+    board = Gameboard();
 
-    updateScreen = () => {
-        const boxes = document.querySelectorAll(".board-box");
+    const boxes = document.querySelectorAll(".board-box");
 
+    clearScreen = () => {
         boxes.forEach(box => {
             box.textContent = "";
         });
     };
 
-    return {updateScreen}
+    updateBoard = () => {
+        const boardWithCellValues = board.getBoardWithCellValues();
+        let k = 1;
+        console.log(boardWithCellValues)
+
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                let box = document.querySelector(`#board-box-${k}`);
+                box.textContent = boardWithCellValues[i][j];
+
+                if (boardWithCellValues[i][j] === 0) {
+                    box.textContent = "";
+                }
+                else if (boardWithCellValues[i][j] === 1) {
+                    box.textContent = "X";
+                }
+                else {
+                    box.textContent = "O";
+                }
+
+                k++;
+            }
+        }
+    };
+
+    updateBoard();
+
+    return {}
 }
 
 let screen = new ScreenController();
