@@ -23,7 +23,11 @@ body {
     width: 400px;
     border-radius: 8px;
     border: 6px solid #003049;
-    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+}
+
+.row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
 }
 
 .board-box {
