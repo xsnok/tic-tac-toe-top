@@ -129,8 +129,7 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
         const playerWonNum = checkWinConditions(board);
         if (playerWonNum !== 0) {
             console.log(`Player ${playerWonNum} has won!`);
-            createWinScreen(playerWonNum);
-            return;
+            return playerWonNum;
         }
         switchActivePlayer();
     };
@@ -188,8 +187,12 @@ function ScreenController() {
 
         boxes.forEach(box => {
             box.addEventListener("click", () => {
-                playRound(box.parentElement.dataset.row, box.dataset.column)
-                updateScreen();
+                const playerNum = playRound(box.parentElement.dataset.row, box.dataset.column); 
+                if (playerNum > 0) {
+                    createWinScreen(playerNum);
+                    updateBoard();
+                }
+                else updateScreen();
             });
         });
     };
