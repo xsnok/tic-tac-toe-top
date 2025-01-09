@@ -135,10 +135,11 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
     };
 
     newGame = () => {
-
+        let game = new Gameboard();
+        let screen = new ScreenController();
     };
 
-    return {getActivePlayer, playRound};
+    return {getActivePlayer, playRound, newGame};
 }
 
 
@@ -205,7 +206,8 @@ function ScreenController() {
         playerHeadline.textContent = `Player ${playerNum} won!`;
         playAgainButton.textContent = "Play again?"
         playAgainButton.addEventListener("click", function(){
-            //TODO: new game function
+            playAgainButton.remove();
+            newGame();
         });
 
         cardContainer.appendChild(playAgainButton);
@@ -216,8 +218,5 @@ function ScreenController() {
 
     return {createWinScreen}
 }
-
-//TODO: Create win screen
-//TODO: Create play again button
 
 let screen = new ScreenController();
