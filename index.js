@@ -85,12 +85,11 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
         const boardWithCellValues = board.getBoardWithCellValues();
         //Checks for 3 in a column
         outerLoop: for (let i = 0; i < 3; i++) {
-
             let temp = boardWithCellValues[0][i];
-            if (temp === 0) break;
+            if (temp === 0) continue;
 
             for (let j = 1; j < 3; j++) {
-                if (boardWithCellValues[j][i] !== temp) break outerLoop;
+                if (boardWithCellValues[j][i] !== temp) continue outerLoop;
             }
             return temp;
         }
@@ -127,11 +126,17 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
         board.placeToken(row, column, activePlayer.token);
 
         printNewRound();
-        if (checkWinConditions(board) !== 0) {
-            console.log(`Player ${checkWinConditions(board)} has won!`)
+        const playerWonNum = checkWinConditions(board);
+        if (playerWonNum !== 0) {
+            console.log(`Player ${playerWonNum} has won!`);
+            createWinScreen(playerWonNum);
             return;
         }
         switchActivePlayer();
+    };
+
+    newGame = () => {
+
     };
 
     return {getActivePlayer, playRound};
@@ -206,7 +211,7 @@ function ScreenController() {
     updateScreen();
     clickHandlerBoard();
 
-    return {}
+    return {createWinScreen}
 }
 
 //TODO: Create win screen
