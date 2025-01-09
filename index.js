@@ -169,8 +169,8 @@ function ScreenController() {
 
     updateTurnHeadline = () => {
         const headline = document.querySelector(".player-turn-headline");
-        const thePlayer = game.getActivePlayer();
-        headline.textContent = `It's Player ${thePlayer.token}'s turn`;
+        const currentPlayer = game.getActivePlayer();
+        headline.textContent = `It's Player ${currentPlayer.token}'s turn`;
     };
 
     updateScreen = () => {
@@ -188,6 +188,20 @@ function ScreenController() {
             });
         });
     };
+
+    createWinScreen = (playerNum) => {
+        const cardContainer = document.querySelector(".card-container");
+        const playerHeadline = document.querySelector(".player-turn-headline");
+        const playAgainButton = document.createElement("button")
+
+        playerHeadline.textContent = `Player ${playerNum} won!`;
+        playAgainButton.textContent = "Play again?"
+        playAgainButton.addEventListener("click", function(){
+            //TODO: new game function
+        });
+
+        cardContainer.appendChild(playAgainButton);
+    }
 
     updateScreen();
     clickHandlerBoard();
