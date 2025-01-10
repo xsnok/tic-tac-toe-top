@@ -39,3 +39,7 @@ body {
     font-size: 4rem;
     color: white;
 }
+
+.board-box:hover {
+    background-color: #395668;
+}
