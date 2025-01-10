@@ -166,7 +166,6 @@ function ScreenController() {
                 else {
                     box.textContent = "O";
                 }
-
                 k++;
             }
         }
@@ -185,23 +184,22 @@ function ScreenController() {
 
     clickHandlerBoard = () => {
         const boxes = document.querySelectorAll(".board-box");
-
-        boxes.forEach(box => {
-            box.addEventListener("click", () => {
-                const playerNum = playRound(box.parentElement.dataset.row, box.dataset.column); 
-                if (playerNum > 0) {
-                    createWinScreen(playerNum);
-                    updateBoard();
-                }
-                else updateScreen();
-            });
-        });
+        boxes.forEach(box => box.addEventListener("click", () => {
+            if (checkWinConditions(board) > 0) return;
+            const playerNum = playRound(box.parentElement.dataset.row, box.dataset.column); 
+            if (playerNum > 0) {
+                createWinScreen(playerNum);
+                updateBoard();
+            }
+            else updateScreen();
+        }));
     };
 
     createWinScreen = (playerNum) => {
         const cardContainer = document.querySelector(".card-container");
         const playerHeadline = document.querySelector(".player-turn-headline");
-        const playAgainButton = document.createElement("button")
+        const playAgainButton = document.createElement("button");
+        const boxes = document.querySelectorAll(".board-box");
 
         playerHeadline.textContent = `Player ${playerNum} won!`;
         playAgainButton.textContent = "Play again?"
@@ -209,7 +207,6 @@ function ScreenController() {
             playAgainButton.remove();
             newGame();
         });
-
         cardContainer.appendChild(playAgainButton);
     }
 
